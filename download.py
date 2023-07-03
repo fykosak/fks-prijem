@@ -1,6 +1,6 @@
 import os, os.path, datetime, subprocess
 
-def download(upload_path, download_path, username, problems, temp_path = "./temp"):
+def download(upload_path, download_path, username, password, problems, temp_path = "./temp"):
     """odkud kam kdo stahuje"""
     if not os.path.exists(temp_path):
         os.makedirs(temp_path)
@@ -12,8 +12,10 @@ def download(upload_path, download_path, username, problems, temp_path = "./temp
 
             if not os.path.exists(problem_download_path):
                 os.makedirs(problem_download_path)
-
-            command = f"scp -r {username}@fykos.cz:{problem_upload_path} {problem_download_path}"
+            if (password):
+                command = f"sshpass -p {password} scp -r {username}@fykos.cz:{problem_upload_path} {problem_download_path}"
+            else:     
+                command = f"scp -r {username}@fykos.cz:{problem_upload_path} {problem_download_path}"
             os.system(command)
     
     else: #defaultne vsechno
@@ -31,8 +33,9 @@ if __name__ == "__main__":
     rocnik = int(input('napis cislo rocniku: '))
     serie = int(input('napis cislo serie: '))
     username = input('napis login na server: ')
+    password = input("Heslo ssh klíče (pokud nemáš, nech prázdné): ")
 
     download_path = f"./download/rocnik{rocnik}/serie{serie}"
     upload_path = f"/network/data/www/fykos/db.fykos.cz/upload/fykos/rocnik{rocnik}/serie{serie}/*"
 
-    download(upload_path, download_path, username, problems)
+    download(upload_path, download_path, username, password, problems)
