@@ -33,7 +33,7 @@ if __name__ == "__main__":
     rocnik = int(input('napis cislo rocniku: '))
     serie = int(input('napis cislo serie: '))
     username = input('napis login na server: ')
-    password = getpass.getpass()
+    password = getpass.getpass(prompt="heslo (nebo prázdné): ")
 
     download_path = f"./download/rocnik{rocnik}/serie{serie}"
     upload_path = f"/network/data/www/fykos/db.fykos.cz/upload/fykos/rocnik{rocnik}/serie{serie}/*"
