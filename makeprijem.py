@@ -1,6 +1,7 @@
 import download, switch, pdfjoin
 import os
 import json
+import getpass
 
 if __name__ == "__main__":
     
@@ -10,11 +11,12 @@ if __name__ == "__main__":
     serie = int(input('napis cislo serie: '))
     username = input('napis login na server: ')
     split_exceptions = input('Vyjimky oddelene nebo dohromady? o/d (oddelene pro elektronicke opravovani, dohromady po tisk, default = o) ')
+    password = getpass.getpass(prompt="Heslo ssh klíče (pokud nemáš, nech prázdné): ")
 
     upload_path = f"/network/data/www/fykos/db.fykos.cz/upload/fykos/rocnik{rocnik}/serie{serie}/*"
     download_path = f"./download/rocnik{rocnik}/serie{serie}"
 
-    download.download(upload_path, download_path, username, problems)
+    download.download(upload_path, download_path, username, password, problems)
 
     #nacist manynames
     manynames_path = "download/poradi_jmen_vicejmennych_resitelu.txt"
