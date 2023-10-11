@@ -40,6 +40,7 @@ def join_it(download_path, split_exceptions, problems):
         merger = PdfFileMerger()
         path_list = glob.glob( download_path + f'/uloha-{problem}/*')
         pdf_list = [path for path in path_list if 'pdf' in path[-4:].lower()]
+        pdf_list = sorted(pdf_list)
         dictnarozdeleni = OrderedDict()
 
         for pdf in pdf_list:
