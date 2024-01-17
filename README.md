@@ -12,6 +12,8 @@ $ pdfsplit.py
 
 Natáhne opravené joined soubory z "/corrected/rocnik{rocnik}/serie{serie}/joined_uloha-{problem}.pdf" (tyhle složky se musí ručně založit a dát tam soubory), na ročník a sérii se zeptá a díky souboru, co vytvořil pdfjoin.py je zase rozpojí na jednotlivé řešitele a rozřadí do složek podle úloh pod "/corrected/..."
 
+Pokud stejná složka "/corrected/rocnik{rocnik}/serie{serie}/" obsahuje i soubor submits.csv (csv oddělené ";", kde jeden sloupeček má název "submit" a obsahuje sumbitids) a při spouštění se zadá (user input) že chceme pouze zahraniční řešitele, tak se do složky "upload_me" přesunou pouze ty soubory, jejichž submitids jsou v daném csv.
+
 $ upload.py
 
 checkne, jestli mají řešení správný tvar pro upload, tedy "*__submitid*". Pokud mají, uloží si všechny submitid do souoru a uploadne řešení na server.
