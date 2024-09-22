@@ -1,7 +1,7 @@
 import os, os.path, datetime, subprocess
 import getpass
 
-def download(upload_path, download_path, username, password, problems, temp_path = "./temp"):
+def download(upload_path, download_path, username, password, problems, temp_path = "./temp", server_name = "old.fykos.cz"):
     """odkud kam kdo stahuje"""
     if not os.path.exists(temp_path):
         os.makedirs(temp_path)
@@ -14,16 +14,16 @@ def download(upload_path, download_path, username, password, problems, temp_path
             if not os.path.exists(problem_download_path):
                 os.makedirs(problem_download_path)
             if (password):
-                command = f"sshpass -p '{password}' scp -r {username}@fykos.cz:{problem_upload_path} {problem_download_path}"
+                command = f"sshpass -p '{password}' scp -r {username}@{server_name}:{problem_upload_path} {problem_download_path}"
             else:
-                command = f"scp -r {username}@fykos.cz:{problem_upload_path} {problem_download_path}"
+                command = f"scp -r {username}@{server_name}:{problem_upload_path} {problem_download_path}"
             os.system(command)
 
     else: #defaultne vsechno
         if not os.path.exists(download_path):
                 os.makedirs(download_path)
 
-        command = f"scp -r {username}@fykos.cz:{upload_path} {download_path}"
+        command = f"scp -r {username}@{server_name}:{upload_path} {download_path}"
         os.system(command)
 
 

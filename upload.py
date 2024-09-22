@@ -36,12 +36,12 @@ def check_and_save_submitids(local_path, submitids_path, problems):
         print(f"{len(submitids)} submitids saved at {submitids_path}")
 
 
-def upload(local_path, remote_path, username, temp_path = "./temp"):
+def upload(local_path, remote_path, username, temp_path = "./temp", server_name = "old.fykos.cz"):
     """odkud kam kdo uploaduje"""
     if not os.path.exists(temp_path):
         os.makedirs(temp_path)
 
-    command = f"scp -r {local_path} {username}@fykos.cz:{remote_path}"
+    command = f"scp -r {local_path} {username}@{server_name}:{remote_path}"
     os.system(command)
 
 
