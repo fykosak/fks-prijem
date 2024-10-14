@@ -36,7 +36,7 @@ def check_and_save_submitids(local_path, submitids_path, problems):
         print(f"{len(submitids)} submitids saved at {submitids_path}")
 
 
-def upload(local_path, remote_path, username, temp_path = "./temp", server_name = "old.fykos.cz"):
+def upload(local_path, remote_path, username, temp_path = "./temp", server_name = "fykos.cz"):
     """odkud kam kdo uploaduje"""
     if not os.path.exists(temp_path):
         os.makedirs(temp_path)
@@ -56,7 +56,7 @@ if __name__ == "__main__":
 
     #do upload dat slozky uloha-U
     local_path = f"./corrected/rocnik{rocnik}/serie{serie}/upload_me/*"
-    remote_path = f"/network/data/www/fykos/db.fykos.cz/upload/corrected/fykos/rocnik{rocnik}/serie{serie}"
+    remote_path = f"/data/docker/fksdb/upload/corrected/fykos/rocnik{rocnik}/serie{serie}"
     submitids_path = f"./corrected/rocnik{rocnik}/serie{serie}/submitids.txt"
 
     check_and_save_submitids(local_path, submitids_path, problems)

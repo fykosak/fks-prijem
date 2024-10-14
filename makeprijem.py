@@ -13,7 +13,7 @@ if __name__ == "__main__":
     split_exceptions = input('Vyjimky oddelene nebo dohromady? o/d (oddelene pro elektronicke opravovani, dohromady po tisk, default = o) ')
     password = getpass.getpass(prompt="Heslo ssh klíče (pokud nemáš, nech prázdné): ")
 
-    upload_path = f"/network/data/www/fykos/db.fykos.cz/upload/fykos/rocnik{rocnik}/serie{serie}/*"
+    upload_path = f"/data/docker/fksdb/upload/fykos/rocnik{rocnik}/serie{serie}/*"
     download_path = f"./download/rocnik{rocnik}/serie{serie}"
 
     download.download(upload_path, download_path, username, password, problems)

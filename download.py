@@ -1,7 +1,7 @@
-import os, os.path, datetime, subprocess
+import os, os.path
 import getpass
 
-def download(upload_path, download_path, username, password, problems, temp_path = "./temp", server_name = "old.fykos.cz"):
+def download(upload_path, download_path, username, password, problems, temp_path = "./temp", server_name = "fykos.cz"):
     """odkud kam kdo stahuje"""
     if not os.path.exists(temp_path):
         os.makedirs(temp_path)
@@ -36,6 +36,6 @@ if __name__ == "__main__":
     password = getpass.getpass(prompt="heslo (nebo prázdné): ")
 
     download_path = f"./download/rocnik{rocnik}/serie{serie}"
-    upload_path = f"/network/data/www/fykos/db.fykos.cz/upload/fykos/rocnik{rocnik}/serie{serie}/*"
+    upload_path = f"/data/docker/fksdb/upload/fykos/rocnik{rocnik}/serie{serie}/*"
 
     download(upload_path, download_path, username, password, problems)
