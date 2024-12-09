@@ -43,11 +43,11 @@ if __name__ == "__main__":
 
     problems = ['1', '2', '3', '4', '5', 'P', 'E', 'S']
     
-    manynames_path = "./download/poradi_jmen_vicejmennych_resitelu.txt"
+    manynames_path = os.path.join(os.path.dirname(__file__), "download", "poradi_jmen_vicejmennych_resitelu.txt")
 
     rocnik = input('napis cislo rocniku: ')
     serie = input('napis cislo serie: ')
-    path = f'./download/rocnik{rocnik}/serie{serie}'
+    path = os.path.join(os.path.dirname(__file__), "download", f"rocnik{rocnik}", f"serie{serie}")
 
     #nacist manynames
     if os.path.exists(manynames_path):

@@ -55,9 +55,9 @@ if __name__ == "__main__":
     print()
 
     #do upload dat slozky uloha-U
-    local_path = f"./corrected/rocnik{rocnik}/serie{serie}/upload_me/*"
+    local_path = os.path.join(os.path.dirname(__file__), "corrected", f"rocnik{rocnik}", f"serie{serie}", "upload_me", "*")
     remote_path = f"/data/docker/fksdb/upload/corrected/fykos/rocnik{rocnik}/serie{serie}"
-    submitids_path = f"./corrected/rocnik{rocnik}/serie{serie}/submitids.txt"
+    submitids_path = os.path.join(os.path.dirname(__file__), "corrected", f"rocnik{rocnik}", f"serie{serie}", "submitids.txt")
 
     check_and_save_submitids(local_path, submitids_path, problems)
     upload(local_path, remote_path, username)

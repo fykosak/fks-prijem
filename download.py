@@ -6,7 +6,6 @@ def download(upload_path, download_path, username, password, problems, temp_path
     if not os.path.exists(temp_path):
         os.makedirs(temp_path)
 
-    print("Downloading... This might take a while :D")
     if len(problems) < 8: #pokud chceme jen nektere ulohy
         for problem in problems:
             problem_upload_path = upload_path + f"/uloha-{problem}"
@@ -37,12 +36,12 @@ def download(upload_path, download_path, username, password, problems, temp_path
 if __name__ == "__main__":
     problems = ['1', '2', '3', '4', '5', 'P', 'E', 'S']
 
-    rocnik = int(input('napis cislo rocniku: '))
-    serie = int(input('napis cislo serie: '))
-    username = input('napis login na server: ')
+    rocnik = int(input('Zadejte číslo ročníku: '))
+    serie = int(input('Zadejte číslo série: '))
+    username = input('Zadejte login na server: ')
     password = getpass.getpass(prompt="heslo (nebo prázdné): ")
 
-    download_path = f"./download/rocnik{rocnik}/serie{serie}"
+    download_path = os.path.join(os.path.dirname(__file__), "download", f"rocnik{rocnik}", f"serie{serie}")
     upload_path = f"/data/docker/fksdb/upload/fykos/rocnik{rocnik}/serie{serie}/*"
 
     download(upload_path, download_path, username, password, problems)
