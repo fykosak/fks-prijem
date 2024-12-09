@@ -1,4 +1,4 @@
-import os, os.path
+import os
 import getpass
 
 def download(upload_path, download_path, username, password, problems, temp_path = "./temp", server_name = "fykos.cz"):
@@ -6,25 +6,32 @@ def download(upload_path, download_path, username, password, problems, temp_path
     if not os.path.exists(temp_path):
         os.makedirs(temp_path)
 
+    print("Downloading... This might take a while :D")
     if len(problems) < 8: #pokud chceme jen nektere ulohy
         for problem in problems:
-            problem_upload_path = upload_path[:-1] + f"uloha-{problem}/*"
+            problem_upload_path = upload_path + f"/uloha-{problem}"
             problem_download_path = download_path + f"/uloha-{problem}"
 
             if not os.path.exists(problem_download_path):
                 os.makedirs(problem_download_path)
+            ssh_command = f"ssh {username}@{server_name} 'cd \"{problem_upload_path}\" && tar --exclude=\'*.bak\' -czf - .' | (cd \"{problem_download_path}\" && tar -xzf -)"
             if (password):
-                command = f"sshpass -p '{password}' scp -r {username}@{server_name}:{problem_upload_path} {problem_download_path}"
+                command = f"sshpass -p '{password}' "+ ssh_command
             else:
-                command = f"scp -r {username}@{server_name}:{problem_upload_path} {problem_download_path}"
-            os.system(command)
+                command = ssh_command
+            res = os.system(command)
+            if res != 0:
+                raise Exception(f"Download of problem {problem} failed!")
+                
 
     else: #defaultne vsechno
         if not os.path.exists(download_path):
-                os.makedirs(download_path)
+            os.makedirs(download_path)
 
-        command = f"scp -r {username}@{server_name}:{upload_path} {download_path}"
-        os.system(command)
+        command = f"ssh {username}@{server_name} 'cd \"{upload_path}\" && tar --exclude=\'*.bak\' -czf - .' | (cd \"{download_path}\" && tar -xzf -)"
+        res = os.system(command)
+        if res != 0:
+            raise Exception(f"Download failed!")
 
 
 if __name__ == "__main__":
