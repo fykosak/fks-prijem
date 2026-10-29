@@ -6,18 +6,21 @@ except ImportError:
     print("pip install -r requirements.txt")
     exit(-1)
 
-import download, switch, pdfjoin
+import download
+import switch
+import pdfjoin
 import os
 import json
 import getpass
 
 if __name__ == "__main__":
-    problems = ['1', '2', '3', '4', '5', 'P', 'E', 'S'] #feel free to change this if you want only some problems
+    problems = ['1', '2', '3', '4', '5', 'P', 'E', 'S']  # feel free to change this if you want only some problems
 
     rocnik = int(input('Zadejte číslo ročníku: '))
     serie = int(input('Zadejte číslo série: '))
     username = input('Zadejte login na server: ')
-    split_exceptions = input('Vyjimky oddelene nebo dohromady? o/d (oddelene pro elektronicke opravovani, dohromady po tisk, default = o) ')
+    split_exceptions = input(
+        'Vyjimky oddelene nebo dohromady? o/d (oddelene pro elektronicke opravovani, dohromady po tisk, default = o) ')
     password = getpass.getpass(prompt="Heslo ssh klíče (pokud nemáš, nech prázdné): ")
 
     upload_path = f"/data/docker/fksdb/upload/fykos/rocnik{rocnik}/serie{serie}"
@@ -25,29 +28,29 @@ if __name__ == "__main__":
 
     print("\nSTEP 1: DOWNLOAD")
     if not os.path.exists(download_path) \
-        or input("Download directory already exists. Download again? (Y/n): ").lower() != 'n':
-            print("Downloading... This might take a while :D")
-            download.download(upload_path, download_path, username, password, problems)
-    
+            or input("Download directory already exists. Download again? (Y/n): ").lower() != 'n':
+        print("Downloading... This might take a while :D")
+        download.download(upload_path, download_path, username, password, problems)
+
     print("\nSTEP 2: HANDLE NAME SWITCHING")
-    #nacist manynames
+    # nacist manynames
     manynames_path = os.path.join(os.path.dirname(__file__), "download", "poradi_jmen_vicejmennych_resitelu.txt")
     if os.path.exists(manynames_path):
-        with open(manynames_path,"r") as f:
+        with open(manynames_path, "r") as f:
             manynames = json.load(f)
     else:
         print("\nWarning: poradi_jmen_vicejmennych_resitelu.txt not found!")
         print("The file should be located at:", manynames_path)
         manynames = {}
-    
-    #switch
+
+    # switch
     print("Switching names...")
     switch.switch_name(download_path, manynames, problems)
     print("Switching names finished!")
 
-    #save manynames
-    with open(manynames_path,"w") as f:
-        json.dump(manynames,f)
+    # save manynames
+    with open(manynames_path, "w") as f:
+        json.dump(manynames, f)
 
     print("\nSTEP 3: BACKUP FILES")
     switch.back_up(download_path)
